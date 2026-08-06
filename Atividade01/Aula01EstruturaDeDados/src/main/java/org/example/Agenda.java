@@ -117,6 +117,27 @@ public class Agenda {
         }
     }
 
+    /*public Contato manipulacaoEmLote(List<Contato> contatos) {
+        if (contatos.size() >= tamanho) {
+            throw new IndexOutOfBoundsException("Número de contatos adicionados maior que o tamanho permitido!");
+        }
+
+        for (Contato contato : contatos) {
+            if (contatos.size() > 0) {
+                for (int i = 0; i < contatos.size(); i++) {
+                    if (contato.getTelefone().equalsIgnoreCase(contatos.get(i).getTelefone())) {
+                        System.out.println("Contato já registrado!");
+                    } else {
+                        AgendaTelefonica.add(contatos.get(i));
+                    }
+                }
+            } else {
+                AgendaTelefonica.add(contato);
+            }
+        }
+        return null;
+    } */
+
     public void buscaPorPrefixo() {
         Scanner sc = new Scanner(System.in);
 
@@ -142,7 +163,25 @@ public class Agenda {
         }
     }
 
+    public Contato listarContatos(List<Contato> contatos) {
+        if (AgendaTelefonica.isEmpty()) {
+            System.out.println("A Agenda Telefônica está vazia.");
+        }
+
+        for (Contato contato : contatos) {
+            System.out.println("Nome: " + contato.getNome());
+            System.out.println("Telefone: " + contato.getTelefone());
+            System.out.println("E-mail: " + contato.getEmail());
+            return contato;
+        }
+        return null;
+    }
+
     public int tamanhoAtualAgenda() {
         return AgendaTelefonica.size();
+    }
+
+    public List<Contato> getAgendaTelefonica() {
+        return AgendaTelefonica;
     }
 }
