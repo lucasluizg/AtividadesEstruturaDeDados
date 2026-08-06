@@ -34,16 +34,17 @@ public class Agenda {
         System.out.println("O contato não foi encontrado!");
     }
 
-    public void buscarContato(String telefone) {
+    public Contato buscarContato(String telefone) {
         for (Contato contato : AgendaTelefonica) {
             if (contato.getTelefone().equalsIgnoreCase(telefone)) {
                 System.out.println("Nome: " + contato.getNome());
                 System.out.println("Telefone: " + contato.getTelefone());
                 System.out.println("E-mail: " + contato.getEmail());
-                return;
+                return contato;
             }
         }
         System.out.println("Contato não encontrado!");
+        return null;
     }
 
     public void atualizarContato(String telefone) {
@@ -68,12 +69,27 @@ public class Agenda {
         System.out.println("Contato não encontrado!");
     }
 
+    public void atualizarContato(String telefone, String nomeNovo, String telefoneNovo, String emailNovo) {
+        for (Contato contato : AgendaTelefonica) {
+            if (contato.getTelefone().equalsIgnoreCase(telefone)) {
+                contato.setNome(nomeNovo);
+                contato.setTelefone(telefoneNovo);
+                contato.setEmail(emailNovo);
+            }
+        }
+    }
+
     public void manipulacaoEmLote() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o número de contatos que você quer adicionar: ");
         int contatosAdicionados = sc.nextInt();
+        sc.nextLine();
 
-        for (int i = 0; i < contatosAdicionados; i++) {
+        if (contatosAdicionados >= tamanho) {
+            throw new IndexOutOfBoundsException("Número de contatos adicionados maior que o tamanho permitido!");
+        }
+
+        for (int i = 0; i < contatosAdicionados;) {
             System.out.println("Digite o novo nome: ");
             String nome = sc.nextLine();
 
@@ -84,7 +100,33 @@ public class Agenda {
             String telefoneNovo = sc.nextLine();
 
             Contato contatoNovo = new Contato(nome, email, telefoneNovo);
-            AgendaTelefonica.add(contatoNovo);
+
+            if (AgendaTelefonica.size() > 0) {
+                for (int j = 0; j < AgendaTelefonica.size(); j++) {
+                    if (contatoNovo.getTelefone().equalsIgnoreCase(AgendaTelefonica.get(j).getTelefone())) {
+                        System.out.println("Contato já registrado!");
+                    } else {
+                        AgendaTelefonica.add(contatoNovo);
+                        i++;
+                    }
+                }
+            } else {
+                AgendaTelefonica.add(contatoNovo);
+                i++;
+            }
+        }
+    }
+
+    public void buscaPorPrefixo() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Escreva um prefixo: ");
+        String prefixo = sc.nextLine();
+
+        for (Contato contato : AgendaTelefonica) {
+            if (contato.getNome().startsWith(prefixo)) {
+                System.out.println("Nome: " + contato.getNome());
+            }
         }
     }
 
@@ -100,4 +142,7 @@ public class Agenda {
         }
     }
 
+    public int tamanhoAtualAgenda() {
+        return AgendaTelefonica.size();
+    }
 }
