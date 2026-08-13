@@ -3,7 +3,7 @@ package org.example;
 public class Main {
     static void main() {
 
-        Agenda minhaAgenda = new Agenda();
+        Agenda minhaAgenda = new Agenda(3);
 
         Contato lucas = new Contato("Lucas", "3346-8613", "lucas@gmail.com");
         Contato ana = new Contato("Ana", "3234-2567", "ana@gmail.com");
@@ -13,13 +13,12 @@ public class Main {
         Contato luana = new Contato("Luana", "9585-8384", "luana@hotmail.com");
 
         minhaAgenda.adicionarContato(lucas);
-        minhaAgenda.adicionarContato(ana);
-        minhaAgenda.adicionarContato(bruno);
-        minhaAgenda.adicionarContato(carol);
-        minhaAgenda.adicionarContato(daniel);
-        minhaAgenda.adicionarContato(luana);
+        minhaAgenda.listarContatos();
 
-        minhaAgenda.buscaPorPrefixo();
+        Contato[] listas = new Contato[] { ana, bruno, carol, daniel };
+
+        minhaAgenda.manipulacaoEmLote(listas);
+        minhaAgenda.listarContatos();
 
     }
 }

@@ -8,18 +8,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestAtualizarContato {
 
-    Contato contato = new Contato("Lucas", "3346-8613", "lucas@gmail.com");
-    Agenda agenda = new Agenda();
+    Contato lucas = new Contato("Lucas", "3346-8613", "lucas@gmail.com");
+    Contato daniel = new Contato("Daniel", "8716-2123", "daniel@gmail.com");
+    Agenda agenda = new Agenda(1);
 
     @Test
     @DisplayName("Teste para verificar se o contato está sendo atualizado.")
     void testAtualizarContato() {
-        agenda.adicionarContato(contato);
-        agenda.atualizarContato("3346-8613", "Bruno", "9876-5432", "bruno@gmail.com");
+        agenda.adicionarContato(lucas);
+        agenda.atualizarContato(lucas, daniel);
         assertAll("Testes para verificar os dados atualizados.",
-                () -> assertEquals("Bruno", agenda.buscarContato("9876-5432").getNome()),
-                () -> assertEquals("9876-5432", agenda.buscarContato("9876-5432").getTelefone()),
-                () -> assertEquals("bruno@gmail.com", agenda.buscarContato("9876-5432").getEmail())
+                () -> assertEquals("Daniel", agenda.buscarContato(lucas).getNome()),
+                () -> assertEquals("8716-2123", agenda.buscarContato(lucas).getTelefone()),
+                () -> assertEquals("daniel@gmail.com", agenda.buscarContato(lucas).getEmail())
         );
     }
 

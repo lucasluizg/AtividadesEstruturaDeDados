@@ -1,158 +1,76 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Agenda {
 
-    private List<Contato> AgendaTelefonica = new ArrayList<>();
-    private int tamanho = 5;
+    private Contato[] agendaTelefonica;
+    private int tamanho;
+
+    public Agenda(int limite) {
+        agendaTelefonica = new Contato[limite];
+        this.tamanho = 0;
+    }
 
     public void adicionarContato(Contato contatoNovo) {
-        if (AgendaTelefonica.size() > tamanho) {
-            System.out.println("Agenda Telefônica cheia!");
-            return;
+        if (tamanho < agendaTelefonica.length) {
+            agendaTelefonica[tamanho] = contatoNovo;
+            tamanho++;
+        } else {
+            System.out.println("Agenda está cheia!");
         }
 
-        for (Contato contato : AgendaTelefonica) {
-            if (contato.getNome().equalsIgnoreCase(contatoNovo.getNome()) || contato.getTelefone().equalsIgnoreCase(contatoNovo.getTelefone())) {
-                System.out.println("Contato já existente");
-                return;
-            }
-        }
-        AgendaTelefonica.add(contatoNovo);
     }
 
-    public void removerContato(String telefone) {
-        for (Contato contato : AgendaTelefonica) {
-            if (contato.getTelefone().equalsIgnoreCase(telefone)) {
-                AgendaTelefonica.remove(contato);
-                return;
+    public void removerContato(Contato contatoNovo) {
+        int indice = buscarIndice(contatoNovo);
+
+        if (indice == 0) {
+            agendaTelefonica[indice] = null;
+            tamanho--;
+        } else {
+            for (int i = indice; i < tamanho - 1; i++) {
+                agendaTelefonica[i] = agendaTelefonica[i + 1];
             }
+            agendaTelefonica[tamanho - 1] = null;
+            tamanho--;
         }
-        System.out.println("O contato não foi encontrado!");
+
     }
 
-    public Contato buscarContato(String telefone) {
-        for (Contato contato : AgendaTelefonica) {
-            if (contato.getTelefone().equalsIgnoreCase(telefone)) {
-                System.out.println("Nome: " + contato.getNome());
-                System.out.println("Telefone: " + contato.getTelefone());
-                System.out.println("E-mail: " + contato.getEmail());
-                return contato;
+    public Contato buscarContato(Contato contatoNovo) {
+        Contato buscaContato = null;
+
+        for (Contato contato : agendaTelefonica) {
+            if (contato.equals(contatoNovo)) {
+                buscaContato = contato;
             }
         }
-        System.out.println("Contato não encontrado!");
-        return null;
+        return buscaContato;
     }
 
-    public void atualizarContato(String telefone) {
-        Scanner sc = new Scanner(System.in);
-        for (Contato contato : AgendaTelefonica) {
-            if (contato.getTelefone().equalsIgnoreCase(telefone)) {
-                System.out.println("Digite o novo nome: ");
-                String nome = sc.nextLine();
-                contato.setNome(nome);
-
-                System.out.println("Digite o novo email: ");
-                String email = sc.nextLine();
-                contato.setEmail(email);
-
-                System.out.println("Digite o novo telefone: ");
-                String telefoneNovo = sc.nextLine();
-                contato.setTelefone(telefoneNovo);
-                return;
-            }
-        }
-
-        System.out.println("Contato não encontrado!");
+    public void atualizarContato(Contato contatoAntigo, Contato contatoNovo) {
+        contatoAntigo.setNome(contatoNovo.getNome());
+        contatoAntigo.setTelefone(contatoNovo.getTelefone());
+        contatoAntigo.setEmail(contatoNovo.getEmail());
     }
 
-    public void atualizarContato(String telefone, String nomeNovo, String telefoneNovo, String emailNovo) {
-        for (Contato contato : AgendaTelefonica) {
-            if (contato.getTelefone().equalsIgnoreCase(telefone)) {
-                contato.setNome(nomeNovo);
-                contato.setTelefone(telefoneNovo);
-                contato.setEmail(emailNovo);
-            }
-        }
-    }
+    public void manipulacaoEmLote(Contato[] listaContatos) {
+        int j = 0;
+        int novoComprimento = tamanho + listaContatos.length;
 
-    public void manipulacaoEmLote() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o número de contatos que você quer adicionar: ");
-        int contatosAdicionados = sc.nextInt();
-        sc.nextLine();
-
-        if (contatosAdicionados > tamanho) {
-            throw new IndexOutOfBoundsException("Número de contatos adicionados maior que o tamanho permitido!");
+        if (novoComprimento > agendaTelefonica.length) {
+            throw new IndexOutOfBoundsException("Lote é maior que a capacidade da agenda!");
         }
 
-        for (int i = 0; i < contatosAdicionados;) {
-            System.out.println("Digite o novo nome: ");
-            String nome = sc.nextLine();
-
-            System.out.println("Digite o novo email: ");
-            String email = sc.nextLine();
-
-            System.out.println("Digite o novo telefone: ");
-            String telefoneNovo = sc.nextLine();
-
-            Contato contatoNovo = new Contato(nome, email, telefoneNovo);
-
-            if (AgendaTelefonica.size() > 1) {
-                for (int j = 0; j < AgendaTelefonica.size(); j++) {
-                    if (contatoNovo.getTelefone().equalsIgnoreCase(AgendaTelefonica.get(j).getTelefone())) {
-                        System.out.println("Contato já registrado!");
-                    } else {
-                        AgendaTelefonica.add(contatoNovo);
-                        i++;
-                    }
-                }
-            } else {
-                AgendaTelefonica.add(contatoNovo);
-                i++;
-            }
-        }
-    }
-
-    public List<Contato> manipulacaoEmLote(List<Contato> contatos) {
-        if (contatos.size() > tamanho) {
-            throw new IndexOutOfBoundsException("Número de contatos adicionados maior que o tamanho permitido!");
-        }
-
-        for (Contato contato : AgendaTelefonica) {
-            if (AgendaTelefonica.size() > 1) {
-                for (int i = 0; i < contatos.size(); i++) {
-                    if (contato.getTelefone().equalsIgnoreCase(AgendaTelefonica.get(i).getTelefone())) {
-                        System.out.println("Contato já registrado!");
-                    } else {
-                        AgendaTelefonica.add(contatos.get(i));
-                    }
-                }
-            } else {
-                AgendaTelefonica.add(contato);
-            }
-        }
-        return contatos;
-    }
-
-    public void buscaPorPrefixo() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Escreva um prefixo: ");
-        String prefixo = sc.nextLine();
-
-        for (Contato contato : AgendaTelefonica) {
-            if (contato.getNome().startsWith(prefixo)) {
-                System.out.println("Nome: " + contato.getNome());
-            }
+        for (int i = tamanho; i < novoComprimento; i++) {
+            agendaTelefonica[i] = listaContatos[j];
+            tamanho++;
+            j++;
         }
     }
 
     public Contato buscaPorPrefixo(String prefixo) {
-        for (Contato contato : AgendaTelefonica) {
+        for (Contato contato : agendaTelefonica) {
             if (contato.getNome().startsWith(prefixo)) {
                 return contato;
             }
@@ -160,37 +78,46 @@ public class Agenda {
         return null;
     }
 
-    public void listarContatos() {
-        if (AgendaTelefonica.isEmpty()) {
+    public Contato listarContatos(Agenda agenda) {
+        if (tamanho == 0) {
             System.out.println("A Agenda Telefônica está vazia.");
         }
 
-        for (Contato contato : AgendaTelefonica) {
-            System.out.println("Nome: " + contato.getNome());
-            System.out.println("Telefone: " + contato.getTelefone());
-            System.out.println("E-mail: " + contato.getEmail());
-        }
-    }
-
-    public Contato listarContatos(List<Contato> contatos) {
-        if (AgendaTelefonica.isEmpty()) {
-            System.out.println("A Agenda Telefônica está vazia.");
-        }
-
-        for (Contato contato : contatos) {
-            System.out.println("Nome: " + contato.getNome());
-            System.out.println("Telefone: " + contato.getTelefone());
-            System.out.println("E-mail: " + contato.getEmail());
+        for (Contato contato : agendaTelefonica) {
             return contato;
         }
         return null;
     }
 
-    public int tamanhoAtualAgenda() {
-        return AgendaTelefonica.size();
+
+    public int buscarIndice(Contato contatoNovo) {
+        int indice = 0;
+
+        for (int i = 0; i < tamanho; i++) {
+            if (contatoNovo.equals(agendaTelefonica[i])) {
+                indice = i;
+            }
+        }
+        return indice;
     }
 
-    public List<Contato> getAgendaTelefonica() {
-        return AgendaTelefonica;
+    public int tamanhoAtualAgenda() {
+        return tamanho;
     }
+    
+
+    public void listarContatos() {
+        if (agendaTelefonica.length == 0) {
+            System.out.println("A Agenda Telefônica está vazia.");
+        }
+
+        for (int i = 0; i < agendaTelefonica.length; i++) {
+            if (agendaTelefonica[i] != null) {
+                System.out.println("Nome: " + agendaTelefonica[i].getNome());
+                System.out.println("Telefone: " + agendaTelefonica[i].getTelefone());
+                System.out.println("Email: " + agendaTelefonica[i].getEmail());
+            }
+        }
+    }
+
 }

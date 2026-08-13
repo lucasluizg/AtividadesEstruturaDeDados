@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd94caa5-ed15-4045-939d-e62f35b42666" name="Changes" comment="" />
+    <list default="true" id="bd94caa5-ed15-4045-939d-e62f35b42666" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/main/java/org/example/Agenda.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/main/java/org/example/Agenda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/main/java/org/example/Contato.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/main/java/org/example/Contato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestAdicionarContato.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestAdicionarContato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestAtualizarContato.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestAtualizarContato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestBuscarContato.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestBuscarContato.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestBuscarPorPrefixo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestBuscarPorPrefixo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestListarContatos.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestListarContatos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestManipulacaoPorLote.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestManipulacaoPorLote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestRemoverContato.java" beforeDir="false" afterPath="$PROJECT_DIR$/Aula01EstruturaDeDados/src/test/java/TestRemoverContato.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="68" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="3HTBzBNxrSvwn6LmmPUjA900Jed" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -21,21 +42,26 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/aluno/Atividade01EstruturaDeDados",
+    "last_opened_file_path": "/home/lucas-luiz-guesser/Documentos/Matérias IFSC/3 semestre/Estrutura de Dados/Rogério/AtividadesEstruturaDeDados/Atividade01/Aula01EstruturaDeDados",
     "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
       </set>
     </attachedChunks>
   </component>
@@ -47,6 +73,8 @@
       <option name="presentableId" value="Default" />
       <updated>1785882437419</updated>
       <workItem from="1785882438601" duration="19000" />
+      <workItem from="1786543289093" duration="16000" />
+      <workItem from="1786623600238" duration="13000" />
     </task>
     <servers />
   </component>

@@ -7,16 +7,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestRemoverContato {
 
-    Contato contato = new Contato("Lucas", "3346-8613", "lucas@gmail.com");
-    Agenda agenda = new Agenda();
+    Contato lucas = new Contato("Lucas", "3346-8613", "lucas@gmail.com");
+    Contato ana = new Contato("Ana", "3234-2567", "ana@gmail.com");
+    Contato bruno = new Contato("Bruno", "2345-5478", "bruno@gmail.com");
+    Contato carol = new Contato("Carol", "6434-9821", "carol@gmail.com");
+    Contato daniel = new Contato("Daniel", "8716-2123", "daniel@gmail.com");
+    Agenda agenda = new Agenda(5);
 
     @Test
     @DisplayName("Teste para verificar se o contato está sendo removido.")
-    void testeRemoverContato() {
-        Agenda agenda = new Agenda();
-        agenda.adicionarContato(contato);
-        agenda.removerContato("3346-8613");
+    void testeRemoverContatoUnico() {
+        agenda.adicionarContato(lucas);
+        agenda.removerContato(lucas);
         assertEquals(0, agenda.tamanhoAtualAgenda());
+    }
+
+    @Test
+    @DisplayName("Teste com mais de um contato.")
+    void testeRemoverMaisDeUmContato() {
+        agenda.adicionarContato(lucas);
+        agenda.adicionarContato(ana);
+        agenda.adicionarContato(bruno);
+        agenda.adicionarContato(carol);
+        agenda.adicionarContato(daniel);
+        agenda.removerContato(daniel);
+        assertEquals(4, agenda.tamanhoAtualAgenda());
     }
 
 }
