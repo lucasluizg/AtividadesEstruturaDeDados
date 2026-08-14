@@ -11,30 +11,46 @@ public class Agenda {
         this.tamanho = 0;
     }
 
-    public void adicionarContato(Contato contatoNovo) {
-        if (tamanho < agendaTelefonica.length) {
-            agendaTelefonica[tamanho] = contatoNovo;
-            tamanho++;
-        } else {
-            System.out.println("Agenda está cheia!");
+    public void expandir() {
+        Contato[] novo = new Contato[agendaTelefonica.length * 2];
+
+        for (int i = 0; i < agendaTelefonica.length; i++) {
+            novo[i] = agendaTelefonica[i];
         }
 
+        agendaTelefonica = novo;
+    }
+
+    public void reduzir() {
+        if (agendaTelefonica.length > 1 && tamanho <= agendaTelefonica.length / 4) {
+            Contato[] novo = new Contato[agendaTelefonica.length / 2];
+
+            for (int i = 0; i < tamanho; i++) {
+                novo[i] = agendaTelefonica[i];
+            }
+
+            agendaTelefonica = novo;
+        }
+    }
+
+    public void adicionarContato(Contato contatoNovo) {
+        if (tamanho == agendaTelefonica.length) {
+            expandir();
+        }
+
+        agendaTelefonica[tamanho] = contatoNovo;
+        tamanho++;
     }
 
     public void removerContato(Contato contatoNovo) {
         int indice = buscarIndice(contatoNovo);
 
-        if (indice == 0) {
-            agendaTelefonica[indice] = null;
-            tamanho--;
-        } else {
-            for (int i = indice; i < tamanho - 1; i++) {
-                agendaTelefonica[i] = agendaTelefonica[i + 1];
-            }
-            agendaTelefonica[tamanho - 1] = null;
-            tamanho--;
+        for (int i = indice; i < tamanho - 1; i++) {
+            agendaTelefonica[i] = agendaTelefonica[i + 1];
         }
-
+        agendaTelefonica[tamanho - 1] = null;
+        tamanho--;
+        reduzir();
     }
 
     public Contato buscarContato(Contato contatoNovo) {
@@ -104,7 +120,11 @@ public class Agenda {
     public int tamanhoAtualAgenda() {
         return tamanho;
     }
-    
+
+    public int comprimentoAgenda() {
+        return agendaTelefonica.length;
+    }
+
 
     public void listarContatos() {
         if (agendaTelefonica.length == 0) {

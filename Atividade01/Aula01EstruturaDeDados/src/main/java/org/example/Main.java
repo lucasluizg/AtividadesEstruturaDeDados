@@ -17,7 +17,6 @@ public class Main {
 
         Contato[] listas = new Contato[] { ana, bruno, carol, daniel };
 
-        minhaAgenda.manipulacaoEmLote(listas);
         minhaAgenda.listarContatos();
 
     }
