@@ -44,37 +44,45 @@ public class Vetor<T> {
         tamanho++;
     }
 
-    public void remover(int indice) {
-        if (indice < 0 || indice >= tamanho) {
-            System.out.println("Indíce inválido!");
-            return;
+    public void remover(T elemento) {
+        int indice;
+
+        for (int i = 0; i < tamanho; i++) {
+            if (elementos[i] == elemento) {
+                indice = i;
+            }
         }
 
-        for (int i = indice; i < tamanho - 1; i++) {
-            elementos[i] = elementos[i + 1];
-        }
         elementos[tamanho - 1] = null;
         tamanho--;
         reduzir();
     }
 
-    public void imprimir() {
-        System.out.print("[");
+    public T obter(int indice) {
+        T elemento = null;
 
-        for (int i = 0; i < tamanho; i++) {
-            System.out.print(elementos[i]);
-
-            if (i < tamanho - 1) {
-                System.out.print(", ");
-            }
+        if (indice < 0 || indice >= tamanho) {
+            System.out.println("Índice inválido");
         }
 
-        System.out.println("]");
+        for (int i = 0; i < tamanho; i++) {
+            if (i == indice) {
+                elemento = elementos[i];
+            }
+        }
+        return elemento;
     }
-
 
     public int getTamanho() {
         return tamanho;
+    }
+
+    public void setTamanho(int tamanho) {
+        this.tamanho = tamanho;
+    }
+
+    public T[] getElementos() {
+        return elementos;
     }
 
     public int getComprimentoVetor() {

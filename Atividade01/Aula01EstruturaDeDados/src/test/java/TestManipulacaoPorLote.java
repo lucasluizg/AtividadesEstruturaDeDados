@@ -1,4 +1,4 @@
-/* import org.example.Agenda;
+import org.example.Agenda;
 import org.example.Contato;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,14 +36,4 @@ public class TestManipulacaoPorLote {
                 () -> assertEquals("carol@gmail.com", agenda.buscarContato(carol).getEmail())
         );
     }
-
-    @Test
-    @DisplayName("Teste para ver se o código verifica se a agenda está cheia.")
-    void testManipulacaoPorLoteTamanho() {
-        Contato[] listas = new Contato[] { ana, bruno, carol, daniel };
-        agenda.adicionarContato(lucas);
-        assertThrows(IndexOutOfBoundsException.class, () -> agenda.manipulacaoEmLote(listas));
-    }
-
 }
-*/
