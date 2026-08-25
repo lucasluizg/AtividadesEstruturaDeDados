@@ -1,11 +1,13 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
     static void main() {
 
         long inicio = System.nanoTime();
+
         // Algoritmo aqui
 
         Vetor<Integer> vetorA =  new Vetor<>(1000);
@@ -18,11 +20,12 @@ public class Main {
         int valorMeio = valorMeio(vetorC);
         int valorFim = valorFim(vetorC);
 
-        System.out.println(buscaBinaria(vetorC, valorMeio));
-
+        int pos = Arrays.binarySearch(vetorC.getElementos(), valorFim);
         long fim = System.nanoTime();
+        /* long duracaoMs = (fim - inicio) / 1000000;
+        System.out.println("Tempo: " + duracaoMs + " ms"); */
         long duracaoMs = (fim - inicio) / 1000000;
-        System.out.println("Tempo: " + duracaoMs + " ms");
+        System.out.println("Tempo Arrays.binarySearch: " + duracaoMs + " ms");
 
 
     }
@@ -61,7 +64,7 @@ public class Main {
             int meio = (inicio + fim) / 2;
 
             if (vetor.obter(meio) == valor) {
-                return comparador;
+                break;
             } else if (vetor.obter(meio) > valor) {
                 fim = meio - 1;
                 comparador++;
