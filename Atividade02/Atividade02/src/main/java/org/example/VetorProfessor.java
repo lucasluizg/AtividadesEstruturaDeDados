@@ -1,30 +1,59 @@
 package org.example;
 
-public class Vetor<T> {
+import java.util.Random;
+
+public class VetorProfessor<T> {
 
     private T[] elementos;
     private int tamanho;
 
     @SuppressWarnings("unchecked")
-    public Vetor(int capacidade) {
-        elementos = (T[]) new Object[capacidade];
+    public VetorProfessor(int quantidade){
+        elementos = (T[])  new Object[quantidade];
         tamanho = 0;
     }
+
+    public void inserir(T elemento) {
+        if (tamanho == elementos.length) {
+            expandir();
+        }
+        elementos[tamanho] = elemento;
+        tamanho++;
+    }
+
+    public void inserir(int indice, T elemento) {
+
+        if (tamanho == elementos.length) {
+            expandir();
+        }
+
+        if (indice < 0 || indice > elementos.length) {
+            System.out.println("Posição Inválida");
+            return;
+        }
+
+        // Desloca os elementos para a direita
+        for (int i = tamanho ; i > indice; i-- ) {
+            elementos[i] = elementos[i-1];
+        }
+        elementos[indice] = elemento;
+        tamanho++;
+    }
+
 
     @SuppressWarnings("unchecked")
     private void expandir() {
         T[] novo = (T[]) new Object[elementos.length * 2];
-
         for (int i = 0; i < elementos.length; i++) {
             novo[i] = elementos[i];
         }
-
         elementos = novo;
     }
 
     @SuppressWarnings("unchecked")
     private void reduzir() {
-         if (elementos.length <= 1) {
+
+        if (elementos.length <= 1) {
             return;
         }
 
@@ -51,32 +80,35 @@ public class Vetor<T> {
         }
     }
 
-    public void inserir(T elemento) {
-        if (tamanho == elementos.length) {
-            expandir();
-        }
-
-        elementos[tamanho] = elemento;
-        tamanho++;
-    }
-
-    public void inserir(int indice, T elemento) {
-        if (tamanho == elementos.length) {
-            expandir();
-        }
-
-        if (indice < 0 || indice > elementos.length) {
-            System.out.println("Posição Inválida");
+    public void remover(int indice) {
+        if (indice < 0 || indice >= tamanho) {
+            System.out.println("Indice Inválido");
             return;
         }
 
-        // Desloca os elementos para a direita
-        for (int i = tamanho ; i > indice; i-- ) {
-            elementos[i] = elementos[i-1];
+        // Desloca os elementos para a esquerda
+        for (int i = indice; i < tamanho; i++) {
+            elementos[i] = elementos[i+1];
         }
-        elementos[indice] = elemento;
-        tamanho++;
+        elementos[tamanho-1] = null;
+        tamanho--;
+        reduzir();
     }
+
+    public boolean remover(T elemento) {
+
+        int indice = localizar(elemento);
+        if (indice == -1) {
+            return false;
+        }
+        remover(indice);
+        return true;
+    }
+
+    public boolean contem(T elemento) {
+        return localizar(elemento) != -1;
+    }
+
 
 
     public void inserirOrdenadov2(T valor) {
@@ -88,16 +120,11 @@ public class Vetor<T> {
             inserir(tamanho,valor);
             return;
         }
-        boolean inseriu = false;
         for (int i = 0; i < tamanho; i++) {
             if ((Integer)valor < (Integer) elementos[i]) {
                 inserir(i,valor);
-                inseriu = true;
                 break;
             }
-        }
-        if (!inseriu) {
-            inserir(tamanho, valor);
         }
     }
 
@@ -123,34 +150,8 @@ public class Vetor<T> {
         tamanho++;
     }
 
-    public void remover(int indice) {
-        if (indice < 0 || indice >= tamanho) {
-            System.out.println("Indice Inválido");
-            return;
-        }
-
-        // Desloca os elementos para a esquerda
-        for (int i = indice; i < tamanho; i++) {
-            elementos[i] = elementos[i+1];
-        }
-        elementos[tamanho-1] = null;
-        tamanho--;
-        reduzir();
-    }
-
-    public T obter(int indice) {
-        T elemento = null;
-
-        if (indice < 0 || indice >= tamanho) {
-            System.out.println("Índice inválido");
-        }
-
-        for (int i = 0; i < tamanho; i++) {
-            if (i == indice) {
-                elemento = elementos[i];
-            }
-        }
-        return elemento;
+    public int obterTamanho() {
+        return tamanho;
     }
 
     public int localizar(T elemento) {
@@ -174,23 +175,6 @@ public class Vetor<T> {
         System.out.println("]");
     }
 
-    public int obterTamanho() {
-        return tamanho;
-    }
 
-    public void setTamanho(int tamanho) {
-        this.tamanho = tamanho;
-    }
 
-    public T[] getElementos() {
-        return elementos;
-    }
-
-    public void setElementos(T[] elementos) {
-        this.elementos = elementos;
-    }
-
-    public int vetorCapacidade() {
-        return elementos.length;
-    }
 }
