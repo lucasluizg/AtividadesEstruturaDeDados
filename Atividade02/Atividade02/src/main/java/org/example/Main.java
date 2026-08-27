@@ -10,22 +10,20 @@ public class Main {
 
         // Algoritmo aqui
 
-        Vetor<Integer> vetorA =  new Vetor<>(1000);
-        Vetor<Integer> vetorB = new Vetor<>(10000);
-        Vetor<Integer> vetorC = new Vetor<>(100000);
+        Vetor<Integer> vetor =  new Vetor<>(1000);;
 
-        inserirAleatorio(vetorC, 100000, 200000);
+        inserirAleatorio(vetor, 100000, 200000);
 
-        int valorInicio = valorInicio(vetorC);
-        int valorMeio = valorMeio(vetorC);
-        int valorFim = valorFim(vetorC);
+        int valorInicio = valorInicio(vetor);
+        int valorMeio = valorMeio(vetor);
+        int valorFim = valorFim(vetor);
 
-        int pos = Arrays.binarySearch(vetorC.getElementos(), valorFim);
+        System.out.println(buscaFibonacci(vetor, valorFim));
         long fim = System.nanoTime();
         /* long duracaoMs = (fim - inicio) / 1000000;
         System.out.println("Tempo: " + duracaoMs + " ms"); */
         long duracaoMs = (fim - inicio) / 1000000;
-        System.out.println("Tempo Arrays.binarySearch: " + duracaoMs + " ms");
+        System.out.println("Tempo: " + duracaoMs + " ms");
 
 
     }
@@ -76,6 +74,53 @@ public class Main {
         }
         return comparador;
 
+    }
+
+    public static int buscaFibonacci(Vetor<Integer> vetor, int valor) {
+        int n = vetor.obterTamanho();
+        int comparador = 0;
+
+        // Inicializa o fibonacci.
+        int fibN2 = 0; // Segundo número na soma.
+        int fibN1 = 1; // Primeiro número na soma.
+        int fibN = fibN2 + fibN1; // Soma dos dois.
+
+        while (fibN < n) {
+            fibN2 = fibN1;
+            fibN1 = fibN;
+            fibN = fibN2 + fibN1;
+            comparador++;
+        }
+
+        // Marca a área eliminada da frente: offset.
+        int offset = -1;
+
+        // Enquanto houver elementos para inspecionar
+        while (fibN > 1) {
+            // Verifica se fibM2 é um índice válido
+            int i = Math.min(offset + fibN2, n - 1);
+
+            // Se o elemento for maior que o valor no índice i, rotaciona para trás
+            if (vetor.obter(i) < valor) {
+                fibN = fibN1;
+                fibN1 = fibN2;
+                fibN2 = fibN - fibN1;
+                offset = i;
+                comparador++;
+            }
+            // Se o elemento for menor que o valor no índice i, rotaciona para frente
+            else if (vetor.obter(i) > valor) {
+                fibN = fibN2;
+                fibN1 = fibN1 - fibN2;
+                fibN2 = fibN - fibN1;
+                comparador++;
+            }
+            // Elemento encontrado
+            else {
+                break;
+            }
+        }
+        return comparador;
     }
 
     public static int valorInicio(Vetor<Integer> vetor) {

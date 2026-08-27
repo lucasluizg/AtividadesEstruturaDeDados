@@ -244,3 +244,85 @@ Tempo Arrays.binarySearch: 8812 ms
 Conclusão: A mesma dos valores anteriores, a função nativa do Java é mais eficiente,
 mas não por muita diferença, e foi constatado maior eficiência da função nativa
 no vetor de 100000 elementos.
+
+## Suponha que você esteja procurando uma palavra em um dicionário. O dicionario tem 240000 palavras.Na pior das hipóteses, de quantas etapas você acha que a busca sequencial e busca binária precisaria? Consegue generalizar para qualquer entrada n?
+
+Resposta: Na pior das hipóteses na busca sequencial, eu precisaria de 2399999 buscas.
+Na pior das hipóteses com busca binária se calcula log2(n) ou log2(240000), que seria 17,87 ou 18.
+
+## Desafio: Busca fibonacci:
+
+### Vetor com 1000 elementos:
+
+#### Valor no inicio: 
+
+```azure
+22
+Tempo: 10 ms
+```
+
+#### Valor no meio:
+
+```azure
+24
+Tempo: 11 ms
+```
+
+#### Valor no fim:
+
+```azure
+17
+Tempo: 10 ms
+```
+
+### Vetor com 10000 elementos.
+
+#### Valor no inicio:
+
+```azure
+28
+Tempo: 157 ms
+```
+
+#### Valor no meio:
+
+```azure
+32
+Tempo: 139 ms
+```
+
+#### Valor no fim:
+
+```azure
+24
+Tempo: 170 ms
+```
+
+### Vetor com 100000 elementos:
+
+#### Valor no início:
+
+```azure
+35
+Tempo: 9240 ms
+```
+
+#### Valor no meio:
+
+```azure
+38
+Tempo: 9389 ms
+```
+
+#### Valor no fim:
+
+```azure
+27
+Tempo: 9106 ms
+```
+
+### Conclusão do desafio:
+
+A busca por fibonacci se mostrou um pouco mais demorada em compilação e precisou de mais 
+buscas do que a busca binária, mas no geral a discrepância não foi grande, principalmente no vetor
+de 100000 elementos.
