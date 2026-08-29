@@ -2,7 +2,7 @@ package org.example;
 
 import vetor.Vetor;
 
-public class Agenda {
+public class Agenda <T>{
 
     private Vetor<Contato> agendaTelefonica;
 
@@ -11,7 +11,7 @@ public class Agenda {
     }
 
     public void adicionarContato(Contato contatoNovo) {
-        agendaTelefonica.inserir(contatoNovo);
+        agendaTelefonica.inserirOrdenado(contatoNovo);
     }
 
     public void removerContato(Contato contatoNovo) {
@@ -37,13 +37,9 @@ public class Agenda {
     }
 
     public void manipulacaoEmLote(Contato[] listaContatos) {
-        int tamanho = agendaTelefonica.getTamanho();
         for (int i = 0; i < listaContatos.length; i++) {
-            agendaTelefonica.inserir(listaContatos[i]);
-            tamanho++;
-            agendaTelefonica.setTamanho(tamanho);
+            agendaTelefonica.inserirOrdenado(listaContatos[i]);
         }
-
     }
 
     public Contato buscaPorPrefixo(String prefixo) {
@@ -55,6 +51,10 @@ public class Agenda {
             }
         }
         return contato;
+    }
+
+    public int buscaBinaria(T valor) {
+        return agendaTelefonica.buscaBinaria(agendaTelefonica, (Contato) valor);
     }
 
     public Contato listarContatos(Agenda agenda) {

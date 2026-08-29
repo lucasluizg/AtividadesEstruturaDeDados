@@ -1,6 +1,6 @@
 package org.example;
 
-public class Contato {
+public class Contato implements Comparable<Contato> {
 
     private String nome;
     private String telefone;
@@ -15,6 +15,11 @@ public class Contato {
     public Contato(String nome, String telefone) {
         this.nome = nome;
         this.telefone = telefone;
+    }
+
+    @Override
+    public int compareTo(Contato contato) {
+        return String.CASE_INSENSITIVE_ORDER.compare(this.nome, contato.nome);
     }
 
     public String getNome() {
@@ -40,4 +45,6 @@ public class Contato {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

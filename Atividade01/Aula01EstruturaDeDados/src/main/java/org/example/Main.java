@@ -1,5 +1,8 @@
 package org.example;
 
+import java.sql.CallableStatement;
+import java.sql.SQLOutput;
+
 public class Main {
     static void main() {
 
@@ -14,11 +17,13 @@ public class Main {
 
         minhaAgenda.adicionarContato(lucas);
 
-        Contato[] lista = new Contato[] { ana, bruno, carol, daniel, luana };
+        Contato[] lista = new Contato[] { daniel, carol, bruno, luana, ana };
 
         minhaAgenda.manipulacaoEmLote(lista);
 
         minhaAgenda.listarContatos();
+
+        System.out.println(minhaAgenda.buscaBinaria(carol));
 
     }
 }
