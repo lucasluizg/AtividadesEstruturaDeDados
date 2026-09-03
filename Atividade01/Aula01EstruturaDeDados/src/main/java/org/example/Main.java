@@ -1,8 +1,5 @@
 package org.example;
 
-import java.sql.CallableStatement;
-import java.sql.SQLOutput;
-
 public class Main {
     static void main() {
 
