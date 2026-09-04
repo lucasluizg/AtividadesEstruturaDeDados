@@ -9,6 +9,16 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
+        Agenda agenda = new Agenda();
+
+        Contato ana = new Contato("Ana", "3346-8613");
+        Contato lucas = new Contato("Lucas", "4346-8613");
+        /* agenda.adicionarContato(ana);
+        agenda.adicionarContato(lucas);
+
+        System.out.println(agenda.buscarContato(ana).getNome());
+        System.out.println(agenda.buscarContato(lucas).getNome()); */
+
         String interfaceInicial = """
                 --- MENU DA AGENDA DE CONTATOS ---
                  1 - Adicionar Contato (Ordenado)
@@ -20,7 +30,7 @@ public class Main {
 
         System.out.println(interfaceInicial);
 
-        Vetor[] minhaAgenda = new Vetor[26];
+        Agenda minhaAgenda = new Agenda();
 
         int n;
 
@@ -29,15 +39,14 @@ public class Main {
 
         switch (n) {
             case 1:
+                sc.nextLine();
                 System.out.print("Digite o nome do contato: ");
                 String nome = sc.nextLine();
-                System.out.println("Digite o telefone: ");
+                System.out.print("Digite o telefone: ");
                 String telefone = sc.nextLine();
                 Contato contato = new Contato(nome, telefone);
-                char primeiraLetra = Character.toUpperCase(contato.getNome().charAt(0));
-                System.out.print("Contato '" + contato.getNome() + "' adicionado com sucesso na letra '"
-                        + primeiraLetra + "' (Indice " + mapeamentoIndice(contato, minhaAgenda) + ")!");
-                break;
+                minhaAgenda.adicionarContato(contato);
+                return;
             case 2:
                 break;
             case 3:
@@ -48,15 +57,12 @@ public class Main {
                 break;
         }
 
-
     }
 
-    static int mapeamentoIndice(Contato contato, Vetor[] vetor) {
-        char letra = Character.toUpperCase(contato.getNome().charAt(0));
+    static int retornarIndice(String nome) {
+        char letra = Character.toUpperCase(nome.charAt(0));
 
         int indice = letra - 'A';
-
-        vetor[indice].inserir(contato);
 
         return indice;
     }

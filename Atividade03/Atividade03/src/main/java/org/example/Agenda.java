@@ -4,26 +4,31 @@ import vetor.Vetor;
 
 public class Agenda <T>{
 
-    private Vetor<Contato> agendaTelefonica;
-
-    public Agenda(int limite) {
-        agendaTelefonica = new Vetor<>(limite);
-    }
+    @SuppressWarnings("unchecked")
+    private Vetor[] agendaTelefonica = new Vetor[26];
 
     public void adicionarContato(Contato contatoNovo) {
-        agendaTelefonica.inserirOrdenado(contatoNovo);
+        int indice = retornarIndice(contatoNovo.getNome());
+
+        Vetor vetor = new Vetor(100);
+        vetor.inserirOrdenado(contatoNovo);
+        agendaTelefonica[indice] = vetor;
     }
 
     public void removerContato(Contato contatoNovo) {
-        agendaTelefonica.remover(contatoNovo);
+        int indice = retornarIndice(contatoNovo.getNome());
+
+        agendaTelefonica[indice].remover(contatoNovo);
     }
 
     public Contato buscarContato(Contato contatoNovo) {
+        int indice =  retornarIndice(contatoNovo.getNome());
+
         Contato buscaContato = null;
 
-        for (int i = 0; i < agendaTelefonica.getTamanho(); i++) {
-            if (agendaTelefonica.obter(i).equals(contatoNovo)) {
-                buscaContato = agendaTelefonica.obter(i);
+        for (int i = 0; i < agendaTelefonica[indice].getTamanho(); i++) {
+            if (agendaTelefonica[indice].obter(i).equals(contatoNovo)) {
+                buscaContato = (Contato) agendaTelefonica[indice].obter(i);
             }
         }
 
@@ -38,11 +43,12 @@ public class Agenda <T>{
 
     public void manipulacaoEmLote(Contato[] listaContatos) {
         for (int i = 0; i < listaContatos.length; i++) {
-            agendaTelefonica.inserirOrdenado(listaContatos[i]);
+            int indice = retornarIndice(listaContatos[i].getNome());
+            agendaTelefonica[indice].inserirOrdenado(listaContatos[i]);
         }
     }
 
-    public Contato buscaPorPrefixo(String prefixo) {
+    /* public Contato buscaPorPrefixo(String prefixo) {
         Contato contato = null;
 
         for (int i = 0; i < agendaTelefonica.getTamanho(); i++) {
@@ -83,6 +89,21 @@ public class Agenda <T>{
         if (agendaTelefonica.getTamanho() == 0) {
             System.out.println("Agenda vazia!");
         }
+    } */
+
+    static int retornarIndice(String nome) {
+        char letra = Character.toUpperCase(nome.charAt(0));
+
+        int indice = letra - 'A';
+
+        return indice;
     }
 
+    public Vetor[] getAgendaTelefonica() {
+        return agendaTelefonica;
+    }
+
+    public void setAgendaTelefonica(Vetor[] agendaTelefonica) {
+        this.agendaTelefonica = agendaTelefonica;
+    }
 }
