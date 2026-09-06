@@ -1,7 +1,5 @@
 package org.example;
 
-import vetor.Vetor;
-
 import java.util.Scanner;
 
 public class Main {
@@ -9,16 +7,61 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        Agenda agenda = new Agenda();
+        Agenda minhaAgenda = new Agenda();
 
-        Contato ana = new Contato("Ana", "3346-8613");
-        Contato lucas = new Contato("Lucas", "4346-8613");
-        /* agenda.adicionarContato(ana);
-        agenda.adicionarContato(lucas);
+        interagir();
 
-        System.out.println(agenda.buscarContato(ana).getNome());
-        System.out.println(agenda.buscarContato(lucas).getNome()); */
+        int n = sc.nextInt();
 
+        while (n != 5) {
+            if (n == 1) {
+                sc.nextLine();
+                System.out.print("Digite o nome do contato: ");
+                String nome = sc.nextLine();
+                System.out.print("Digite o telefone: ");
+                String telefone = sc.nextLine();
+                Contato contato = new Contato(nome, telefone);
+                minhaAgenda.adicionarContato(contato);
+                System.out.println("Contato " + contato.getNome() + " adicionado com sucesso na letra '" +
+                        Character.toUpperCase(contato.getNome().charAt(0)) + "' (Índice "
+                        + retornarIndice(contato.getNome()) + ")!");
+                System.out.println();
+            } else if (n == 2) {
+                sc.nextLine();
+                System.out.print("Digite o nome do contato a remover: ");
+                String nome = sc.nextLine();
+                Contato contato = minhaAgenda.buscarContato(nome);
+                minhaAgenda.removerContato(contato);
+                System.out.println("Contato " + contato.getNome() + " removido com sucesso do vetor " +
+                        contato.getNome().charAt(0) + "!");
+                System.out.println();
+            } else if (n == 3) {
+                sc.nextLine();
+                System.out.print("Digite o nome do contato a buscar: ");
+                String nome = sc.nextLine();
+                Contato contato = minhaAgenda.buscarContato(nome);
+                System.out.println("Contato encontrado no vetor '" + Character.toUpperCase(contato.getNome().charAt(0))
+                        + "': " + contato.getNome() + ", Telefone: " + contato.getTelefone());
+                System.out.println();
+            } else if (n == 4) {
+                sc.nextLine();
+                System.out.print("Digite o nome do contato a atualizar: ");
+                String nome = sc.nextLine();
+                Contato contatoAntigo = minhaAgenda.buscarContato(nome);
+                System.out.print("Digite o novo telefone: ");
+                String telefoneNovo = sc.nextLine();
+                Contato contatoNovo = new Contato(nome, telefoneNovo);
+                minhaAgenda.atualizarContato(contatoAntigo, contatoNovo);
+                System.out.println("Contato '" + nome + "' atualizado com sucesso!");
+                System.out.println();
+            }
+            interagir();
+            n = sc.nextInt();
+        }
+
+    }
+
+    public static void interagir() {
         String interfaceInicial = """
                 --- MENU DA AGENDA DE CONTATOS ---
                  1 - Adicionar Contato (Ordenado)
@@ -29,34 +72,7 @@ public class Main {
                 """;
 
         System.out.println(interfaceInicial);
-
-        Agenda minhaAgenda = new Agenda();
-
-        int n;
-
         System.out.print("Escolha uma opção: ");
-        n = sc.nextInt();
-
-        switch (n) {
-            case 1:
-                sc.nextLine();
-                System.out.print("Digite o nome do contato: ");
-                String nome = sc.nextLine();
-                System.out.print("Digite o telefone: ");
-                String telefone = sc.nextLine();
-                Contato contato = new Contato(nome, telefone);
-                minhaAgenda.adicionarContato(contato);
-                return;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-        }
-
     }
 
     static int retornarIndice(String nome) {
