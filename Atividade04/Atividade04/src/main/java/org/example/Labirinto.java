@@ -93,34 +93,65 @@ public class Labirinto {
                 System.out.println("O caminho foi encontrado");
                 return true;
             } else if (mapa[linha][coluna] != '+') {
-                mapa[linha][coluna] = '+';
-
                 if (linha - 1 < 0 && coluna + 1 > labirinto.colunaFinal) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarEsquerda(mapa);
+                    verificarBaixo(mapa);
+                    contador = 0;
                     break;
                 } else if (linha - 1 < 0 && coluna - 1 < 0) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarDireita(mapa);
+                    verificarBaixo(mapa);
+                    contador = 0;
                     break;
                 } else if (linha + 1 > labirinto.linhaFinal && coluna - 1 < 0) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarCima(mapa);
+                    verificarDireita(mapa);
+                    contador = 0;
                     break;
                 } else if (linha + 1 > labirinto.linhaFinal && coluna + 1 > labirinto.colunaFinal) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarCima(mapa);
+                    verificarEsquerda(mapa);
+                    contador = 0;
                     break;
                 } else if (linha - 1 < 0) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarBaixo(mapa);
+                    verificarEsquerda(mapa);
+                    verificarDireita(mapa);
+                    contador = 0;
                     break;
                 } else if (linha + 1 > labirinto.linhaFinal) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarCima(mapa);
+                    verificarEsquerda(mapa);
+                    verificarDireita(mapa);
+                    contador = 0;
                     break;
                 } else if (coluna - 1 < 0) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarCima(mapa);
+                    verificarBaixo(mapa);
+                    verificarDireita(mapa);
+                    contador = 0;
                     break;
                 } else if (coluna + 1 > labirinto.colunaFinal) {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarCima(mapa);
+                    verificarEsquerda(mapa);
+                    verificarBaixo(mapa);
+                    contador = 0;
                     break;
                 } else {
-                    acharPosicaoVaga(labirinto);
+                    mapa[linha][coluna] = '+';
+                    verificarCima(mapa);
+                    verificarBaixo(mapa);
+                    verificarEsquerda(mapa);
+                    verificarDireita(mapa);
+                    contador = 0;
                     break;
                 }
             }
@@ -128,176 +159,113 @@ public class Labirinto {
         return false;
     }
 
-    public static void acharPosicaoVaga(Labirinto labirinto) {
+    //Conta quantas vezes foi utilizada a opção de mover
+    static int contador = 0;
+
+    public static void verificarCima(char[][] mapa) {
         int linha = calcularLinha(pilha.peek());
         int coluna = calcularColuna(pilha.peek());
 
-        StringBuilder lc = new StringBuilder();
+        Scanner sc = new Scanner(System.in);
 
-        if (linha - 1 < 0 && coluna + 1 > labirinto.colunaFinal) {
-            if (mapa[linha + 1][coluna] == ' ') {
-                mapa[linha + 1][coluna] = '+';
-                labirinto.linhaInicial = linha - 1;
-                labirinto.colunaInicial = coluna + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha + 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna - 1] == ' ') {
-                mapa[linha][coluna - 1] = '+';
-                labirinto.colunaInicial = coluna - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna - 1))));
-                lc.setLength(0);
-            }
-        } else if (linha - 1 < 0 && coluna - 1 < 0) {
-            if (mapa[linha + 1][coluna] == ' ') {
-                mapa[linha + 1][coluna] = '+';
-                labirinto.linhaInicial = linha + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha + 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna + 1] == ' ') {
-                mapa[linha][coluna + 1] = '+';
-                labirinto.colunaInicial = coluna + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna + 1))));
-                lc.setLength(0);
-            }
-        } else if (linha + 1 > labirinto.linhaFinal && coluna - 1 < 0) {
-            if (mapa[linha - 1][coluna] == ' ') {
-                mapa[linha - 1][coluna] = '+';
-                labirinto.linhaInicial = linha - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha - 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna + 1] == ' ') {
-                mapa[linha][coluna + 1] = '+';
-                labirinto.colunaInicial = coluna + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna + 1))));
-                lc.setLength(0);
-            }
-        } else if (linha + 1 > labirinto.linhaFinal && coluna + 1 > labirinto.colunaFinal) {
-            if (mapa[linha - 1][coluna] == ' ') {
-                mapa[linha - 1][coluna] = '+';
-                labirinto.linhaInicial = linha - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha - 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna - 1] == ' ') {
-                mapa[linha][coluna - 1] = '+';
-                labirinto.colunaInicial = coluna - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna - 1))));
-                lc.setLength(0);
-            }
-        } else if (linha - 1 < 0) {
-            if (mapa[linha][coluna - 1] == ' ') {
-                mapa[linha][coluna - 1] = '+';
-                labirinto.colunaInicial = coluna - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna - 1))));
-                lc.setLength(0);
-            }
-            if (mapa[linha + 1][coluna] == ' ') {
-                mapa[linha + 1][coluna] = '+';
-                labirinto.linhaInicial = linha + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha + 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna + 1] == ' ') {
-                mapa[linha][coluna + 1] = '+';
-                labirinto.colunaInicial = coluna + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna + 1))));
-                lc.setLength(0);
-            }
-        } else if (linha + 1 > labirinto.linhaFinal) {
-            if (mapa[linha - 1][coluna] == ' ') {
-                mapa[linha - 1][coluna] = '+';
-                labirinto.linhaInicial = linha - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha - 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna - 1] == ' ') {
-                mapa[linha][coluna - 1] = '+';
-                labirinto.colunaInicial = coluna - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna - 1))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna + 1] == ' ') {
-                mapa[linha][coluna + 1] = '+';
-                labirinto.colunaInicial = coluna + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna + 1))));
-                lc.setLength(0);
-            }
-        } else if (coluna - 1 < 0) {
-            if (mapa[linha - 1][coluna] == ' ') {
-                mapa[linha - 1][coluna] = '+';
-                labirinto.linhaInicial = linha - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha - 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha + 1][coluna] == ' ') {
-                mapa[linha + 1][coluna] = '+';
-                labirinto.linhaInicial = linha + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha + 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna + 1] == ' ') {
-                mapa[linha][coluna + 1] = '+';
-                labirinto.colunaInicial = coluna + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna + 1))));
-                lc.setLength(0);
-            }
-        } else if (coluna + 1 > labirinto.colunaFinal) {
-            if (mapa[linha][coluna - 1] == ' ') {
-                mapa[linha][coluna - 1] = '+';
-                labirinto.colunaInicial = coluna - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna - 1))));
-                lc.setLength(0);
-            }
-            if (mapa[linha - 1][coluna - 1] == ' ') {
-                mapa[linha - 1][coluna - 1] = '+';
-                labirinto.linhaInicial = linha - 1;
-                labirinto.colunaInicial = coluna - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha - 1).append(coluna - 1))));
-                lc.setLength(0);
-            }
-            if (mapa[linha + 1][coluna] == ' ') {
-                mapa[linha + 1][coluna] = '+';
-                labirinto.linhaInicial = linha + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha + 1).append(coluna))));
-                lc.setLength(0);
-            }
-        } else {
-            if (mapa[linha - 1][coluna] == ' ') {
-                mapa[linha - 1][coluna] = '+';
-                labirinto.linhaInicial = linha - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha - 1).append(coluna))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna - 1] == ' ') {
-                mapa[linha][coluna - 1] = '+';
-                labirinto.colunaInicial = coluna - 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna - 1))));
-                lc.setLength(0);
-            }
-            if (mapa[linha][coluna + 1] == ' ') {
-                mapa[linha][coluna + 1] = '+';
-                labirinto.colunaInicial = coluna + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha).append(coluna + 1))));
-                lc.setLength(0);
-            }
-            if (mapa[linha + 1][coluna] == ' ') {
-                mapa[linha + 1][coluna] = '+';
-                labirinto.linhaInicial = linha + 1;
-                pilha.push(Integer.parseInt(String.valueOf(lc.append(linha + 1).append(coluna))));
-                lc.setLength(0);
+        System.out.println("Você quer se mover para cima? S/N: ");
+        String escolha = sc.nextLine();
+
+        if (escolha.equalsIgnoreCase("S")) {
+            if (mapa[linha - 1][coluna] != ' ') {
+                System.out.println("Grade não está vazia!");
+            } else if (contador > 0) {
+                System.out.println("Já foi escolhida uma opção!");
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append(linha - 1).append(coluna);
+                pilha.push(Integer.parseInt((sb.toString())));
+                contador++;
             }
         }
     }
 
+    public static void verificarBaixo(char[][] mapa) {
+        int linha = calcularLinha(pilha.peek());
+        int coluna = calcularColuna(pilha.peek());
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Você quer se mover para baixo? S/N: ");
+        String escolha = sc.nextLine();
+
+        if (escolha.equalsIgnoreCase("S")) {
+            if (mapa[linha + 1][coluna] != ' ') {
+                System.out.println("Grade não está vazia!");
+            } else if (contador > 0) {
+                System.out.println("Já foi escolhida uma opção!");
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append(linha + 1).append(coluna);
+                pilha.push(Integer.parseInt(sb.toString()));
+                contador++;
+            }
+        }
+
+    }
+
+    public static void verificarEsquerda(char[][] mapa) {
+        int linha = calcularLinha(pilha.peek());
+        int coluna = calcularColuna(pilha.peek());
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Você quer se mover para a esquerda? S/N: ");
+        String escolha = sc.nextLine();
+
+        if (escolha.equalsIgnoreCase("S")) {
+            if (mapa[linha][coluna - 1] != ' ') {
+                System.out.println("Grade não está vazia!");
+            } else if (contador > 0) {
+                System.out.println("Já foi escolhida uma opção!");
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append(linha).append(coluna - 1);
+                pilha.push(Integer.parseInt(sb.toString()));
+            }
+        }
+
+    }
+
+    public static void verificarDireita(char[][] mapa) {
+        int linha = calcularLinha(pilha.peek());
+        int coluna = calcularColuna(pilha.peek());
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Você quer se mover para a direita? S/N: ");
+        String escolha = sc.nextLine();
+
+        if (escolha.equalsIgnoreCase("S")) {
+            if (mapa[linha][coluna + 1] != ' ') {
+                System.out.println("Grade não está vazia!");
+            } else if (contador > 0) {
+                System.out.println("Já foi escolhida uma opção!");
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append(linha).append(coluna + 1);
+                pilha.push(Integer.parseInt(sb.toString()));
+                contador++;
+            }
+        }
+
+    }
+
     public static int calcularLinha(int pos) {
-        return pos / 10;
+        String texto = Integer.toString(pos);
+
+        return Integer.parseInt(texto.substring(0, 1));
     }
 
     public static int calcularColuna(int pos) {
-        return pos % 10;
+        String texto = Integer.toString(pos);
+
+        return Integer.parseInt(texto.substring(1));
     }
 
 
@@ -318,7 +286,7 @@ public class Labirinto {
         while (rodar.equalsIgnoreCase("s")) {
             retrocesso(labirinto);
             labirinto.imprimir();
-            pilha.imprimir();
+            System.out.println("Posição atual: " + pilha.peek());
             System.out.println("Quer continuar rodando? S/N: ");
             rodar = sc.nextLine();
         }
