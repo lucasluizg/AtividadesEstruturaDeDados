@@ -57,7 +57,7 @@ public class Labirinto {
     private int colunaInicial = 0;
     private int linhaFinal = 21;
     private int colunaFinal = 49;
-    static Pilha<Integer> pilha = new Pilha<Integer>(100);
+    static Pilha<Posicao> pilha = new Pilha<Posicao>(100);
 
     public void imprimir() {
 
@@ -70,24 +70,25 @@ public class Labirinto {
         }
     }
 
-    public static int acharPosicao(char c) {
-        StringBuilder posicao = new StringBuilder();
+    public static Posicao acharPosicao(char c) {
+        Posicao posicao = new Posicao(0, 0);
         for (int i = 0; i < mapa.length; i++) {
             for (int j = 0; j < mapa[i].length; j++) {
                 if (mapa[i][j] == c) {
-                    posicao.append(i).append(j);
+                    posicao.linha = i;
+                    posicao.coluna = j;
+                    break;
                 }
             }
         }
-
-        return Integer.parseInt(posicao.toString());
+        return posicao;
     }
 
     public static boolean retrocesso(Labirinto labirinto) {
 
         while (!pilha.isEmpty()) {
-            int linha = calcularLinha(pilha.peek());
-            int coluna = calcularColuna(pilha.peek());
+            int linha = pilha.peek().linha;
+            int coluna = pilha.peek().coluna;
 
             if (mapa[linha][coluna] == 'T') {
                 System.out.println("O caminho foi encontrado");
@@ -109,41 +110,35 @@ public class Labirinto {
                     mapa[linha][coluna] = '+';
                     verificarCima(mapa);
                     verificarDireita(mapa);
-                    contador = 0;
                     break;
                 } else if (linha + 1 > labirinto.linhaFinal && coluna + 1 > labirinto.colunaFinal) {
                     mapa[linha][coluna] = '+';
                     verificarCima(mapa);
                     verificarEsquerda(mapa);
-                    contador = 0;
                     break;
                 } else if (linha - 1 < 0) {
                     mapa[linha][coluna] = '+';
                     verificarBaixo(mapa);
                     verificarEsquerda(mapa);
                     verificarDireita(mapa);
-                    contador = 0;
                     break;
                 } else if (linha + 1 > labirinto.linhaFinal) {
                     mapa[linha][coluna] = '+';
                     verificarCima(mapa);
                     verificarEsquerda(mapa);
                     verificarDireita(mapa);
-                    contador = 0;
                     break;
                 } else if (coluna - 1 < 0) {
                     mapa[linha][coluna] = '+';
                     verificarCima(mapa);
                     verificarBaixo(mapa);
                     verificarDireita(mapa);
-                    contador = 0;
                     break;
                 } else if (coluna + 1 > labirinto.colunaFinal) {
                     mapa[linha][coluna] = '+';
                     verificarCima(mapa);
                     verificarEsquerda(mapa);
                     verificarBaixo(mapa);
-                    contador = 0;
                     break;
                 } else {
                     mapa[linha][coluna] = '+';
@@ -151,7 +146,6 @@ public class Labirinto {
                     verificarBaixo(mapa);
                     verificarEsquerda(mapa);
                     verificarDireita(mapa);
-                    contador = 0;
                     break;
                 }
             }
@@ -159,12 +153,11 @@ public class Labirinto {
         return false;
     }
 
-    //Conta quantas vezes foi utilizada a opção de mover
     static int contador = 0;
 
     public static void verificarCima(char[][] mapa) {
-        int linha = calcularLinha(pilha.peek());
-        int coluna = calcularColuna(pilha.peek());
+        int linha = pilha.peek().linha;
+        int coluna = pilha.peek().coluna;
 
         Scanner sc = new Scanner(System.in);
 
@@ -175,19 +168,23 @@ public class Labirinto {
             if (mapa[linha - 1][coluna] != ' ') {
                 System.out.println("Grade não está vazia!");
             } else if (contador > 0) {
-                System.out.println("Já foi escolhida uma opção!");
+                System.out.println("Já foi escolhido um movimento!");
+                contador = 0;
             } else {
-                StringBuilder sb = new StringBuilder();
-                sb.append(linha - 1).append(coluna);
-                pilha.push(Integer.parseInt((sb.toString())));
-                contador++;
+                while (mapa[linha - 1][coluna] == ' ') {
+                    Posicao pos = new Posicao(linha - 1, coluna);
+                    pilha.push(pos);
+                    mapa[linha - 1][coluna] = '+';
+                    linha -= 1;
+                }
             }
         }
+        contador++;
     }
 
     public static void verificarBaixo(char[][] mapa) {
-        int linha = calcularLinha(pilha.peek());
-        int coluna = calcularColuna(pilha.peek());
+        int linha = pilha.peek().linha;
+        int coluna = pilha.peek().coluna;
 
         Scanner sc = new Scanner(System.in);
 
@@ -197,21 +194,21 @@ public class Labirinto {
         if (escolha.equalsIgnoreCase("S")) {
             if (mapa[linha + 1][coluna] != ' ') {
                 System.out.println("Grade não está vazia!");
-            } else if (contador > 0) {
-                System.out.println("Já foi escolhida uma opção!");
             } else {
-                StringBuilder sb = new StringBuilder();
-                sb.append(linha + 1).append(coluna);
-                pilha.push(Integer.parseInt(sb.toString()));
-                contador++;
+                while (mapa[linha + 1][coluna] == ' ') {
+                    Posicao pos = new Posicao(linha + 1, coluna);
+                    pilha.push(pos);
+                    mapa[linha + 1][coluna] = '+';
+                    linha += 1;
+                }
             }
         }
-
+        contador++;
     }
 
     public static void verificarEsquerda(char[][] mapa) {
-        int linha = calcularLinha(pilha.peek());
-        int coluna = calcularColuna(pilha.peek());
+        int linha = pilha.peek().linha;
+        int coluna = pilha.peek().coluna;
 
         Scanner sc = new Scanner(System.in);
 
@@ -221,20 +218,21 @@ public class Labirinto {
         if (escolha.equalsIgnoreCase("S")) {
             if (mapa[linha][coluna - 1] != ' ') {
                 System.out.println("Grade não está vazia!");
-            } else if (contador > 0) {
-                System.out.println("Já foi escolhida uma opção!");
             } else {
-                StringBuilder sb = new StringBuilder();
-                sb.append(linha).append(coluna - 1);
-                pilha.push(Integer.parseInt(sb.toString()));
+                while (mapa[linha][coluna - 1] == ' ') {
+                    Posicao pos = new Posicao(linha, coluna - 1);
+                    pilha.push(pos);
+                    mapa[linha][coluna - 1] = '+';
+                    coluna -= 1;
+                }
             }
         }
-
+        contador++;
     }
 
     public static void verificarDireita(char[][] mapa) {
-        int linha = calcularLinha(pilha.peek());
-        int coluna = calcularColuna(pilha.peek());
+        int linha = pilha.peek().linha;
+        int coluna = pilha.peek().coluna;
 
         Scanner sc = new Scanner(System.in);
 
@@ -244,16 +242,16 @@ public class Labirinto {
         if (escolha.equalsIgnoreCase("S")) {
             if (mapa[linha][coluna + 1] != ' ') {
                 System.out.println("Grade não está vazia!");
-            } else if (contador > 0) {
-                System.out.println("Já foi escolhida uma opção!");
             } else {
-                StringBuilder sb = new StringBuilder();
-                sb.append(linha).append(coluna + 1);
-                pilha.push(Integer.parseInt(sb.toString()));
-                contador++;
+                while (mapa[linha][coluna + 1] == ' ') {
+                    Posicao pos = new Posicao(linha, coluna + 1);
+                    pilha.push(pos);
+                    mapa[linha][coluna + 1] = '+';
+                    coluna += 1;
+                }
             }
         }
-
+        contador++;
     }
 
     public static int calcularLinha(int pos) {
@@ -277,7 +275,7 @@ public class Labirinto {
         retrocesso(labirinto);
         labirinto.imprimir();
 
-        int pos = acharPosicao('P');
+        Posicao pos = acharPosicao('P');
         pilha.push(pos);
 
         System.out.println("Quer continuar rodando? S/N: ");
@@ -286,7 +284,7 @@ public class Labirinto {
         while (rodar.equalsIgnoreCase("s")) {
             retrocesso(labirinto);
             labirinto.imprimir();
-            System.out.println("Posição atual: " + pilha.peek());
+            System.out.println("Posição atual: " + " Linha: " + pilha.peek().linha + " Coluna: " + pilha.peek().coluna);
             System.out.println("Quer continuar rodando? S/N: ");
             rodar = sc.nextLine();
         }
