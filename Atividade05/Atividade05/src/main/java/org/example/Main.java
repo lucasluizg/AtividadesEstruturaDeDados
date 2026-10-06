@@ -3,22 +3,18 @@ package org.example;
 public class Main {
     static void main() {
 
-        FilaCircular<Processo> fila = new FilaCircular<>(10);
+        Processo p1 = new Processo("P1", 7, 0, "EXECUTANDO");
+        Processo p2 = new Processo("P2", 4, 0, "EXECUTANDO");
+        Processo p3 = new Processo("P3", 5, 1, "EXECUTANDO");
+        Processo p4 = new Processo("P4", 6, 2, "EXECUTANDO");
+        Processo p5 = new Processo("P5", 3, 4, "EXECUTANDO");
 
-        fila.enfileirar(new Processo("P1", 7, 0, "EXECUTANDO"));
-        fila.enfileirar(new Processo("P2", 4, 0, "EXECUTANDO"));
-        fila.enfileirar(new Processo("P3", 5, 1, "EXECUTANDO"));
-        fila.enfileirar(new Processo("P4", 6, 2, "EXECUTANDO"));
-        fila.enfileirar(new Processo("P5", 3, 4, "EXECUTANDO"));
+        Processo[] processos = {p1, p2, p3, p4, p5};
 
-        /*try {
-            System.out.println(nome + " executando...");
-            Thread.sleep(2000); // pausa 2 segundos
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+        Escalonador escalonador = new Escalonador();
 
-        public static void pegarElemento()
+        escalonador.checarProcesso(processos);
+
 
     }
 }
