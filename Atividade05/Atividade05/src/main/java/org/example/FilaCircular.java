@@ -26,7 +26,7 @@ public class FilaCircular <T extends Comparable<T>> {
     }
 
     public T desinfileirar() {
-        if (isEmpty()) {
+        if (estaVazia()) {
             throw new RuntimeException("Fila está vazia!");
         }
 
@@ -39,8 +39,16 @@ public class FilaCircular <T extends Comparable<T>> {
         return valor;
     }
 
-    public boolean isEmpty() {
+    public boolean estaVazia() {
         return tamanho == 0;
+    }
+
+    public T obterElementos(int indice) {
+        for (int i = 0; i < tamanho; i++) {
+            indice = (inicio + i) % vetor.getElementos().length;
+            return vetor.getElementos()[indice];
+        }
+        return null;
     }
 
     public void imprimir() {
@@ -50,6 +58,30 @@ public class FilaCircular <T extends Comparable<T>> {
             System.out.print(vetor.getElementos()[indice] + " ");
         }
         System.out.println();
+    }
+
+    public int getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(int inicio) {
+        this.inicio = inicio;
+    }
+
+    public int getFim() {
+        return fim;
+    }
+
+    public void setFim(int fim) {
+        this.fim = fim;
+    }
+
+    public void setTamanho(int tamanho) {
+        this.tamanho = tamanho;
+    }
+
+    public int getTamanho() {
+        return tamanho;
     }
 
     public Vetor<T> getVetor() {

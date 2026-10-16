@@ -15,19 +15,35 @@ public class Escalonador {
 
     public void checarProcesso(Processo[] processos) {
 
-        for (int i = 0; i < processos.length; i++) {
-            for (int j = 0; j < processos.length; j++) {
-                if (processos[j].getTempoChegada() == i) {
-                    System.out.println("Tempo " + i + ": " + processos[j].getNome() + " chegou e entrou na fila.");
-                    fila.enfileirar(processos[j]);
-                }
-            }
+        int tempo = 0;
 
-            tempo(processos[i].getNome());
-            if (processos[i].getTempoChegada() > 0) {
-                processos[i].setTempoChegada(processos[i].getTempoChegada() - 2);
-            } else if (processos[i].getTempoChegada() <= 0) {
+        rodarTempo(processos, tempo);
+
+        while (!fila.estaVazia()) {
+            tempo(fila.obterElementos(fila.getInicio()).getNome());
+            fila.obterElementos(fila.getInicio()).setInstrucoesRestantes(fila.obterElementos(fila.getInicio()).getInstrucoesRestantes() - 2);
+
+            if (fila.obterElementos(fila.getInicio()).getInstrucoesRestantes() > 0) {
+                System.out.println(fila.obterElementos(fila.getInicio()).getNome()
+                        + " executou 2 instruções. Restam "
+                        + fila.obterElementos(fila.getInicio()).getInstrucoesRestantes());
+                fila.enfileirar(fila.obterElementos(fila.getInicio()));
                 fila.desinfileirar();
+            } else {
+                System.out.println(fila.obterElementos(fila.getInicio()).getNome()
+                        + " executou 2 instruções. Restam 0.");
+                fila.desinfileirar();
+            }
+            rodarTempo(processos, ++tempo);
+        }
+
+    }
+
+    public void rodarTempo(Processo[] processos, int tempo) {
+        for (int i = 0; i < processos.length; i++) {
+            if (tempo == processos[i].getTempoChegada()) {
+                System.out.println("Tempo " + tempo + ": " + processos[i].getNome() + " chegou e entrou na fila.");
+                fila.enfileirar(processos[i]);
             }
         }
     }

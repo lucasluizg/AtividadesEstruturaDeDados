@@ -139,9 +139,14 @@ public class Vetor<T extends Comparable<T>> {
         return -1;
     }
 
-    public boolean isEmpty() {
+    public boolean estaVazio() {
         return tamanho == 0;
     }
+
+    public boolean isEmpty() {
+        return estaVazio();
+    }
+
 
     public void imprimir() {
         for (T elemento: elementos) {
